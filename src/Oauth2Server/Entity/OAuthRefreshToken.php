@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 16:18:53
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 16:23:36
+ * @Last Modified time: 2018-03-16 12:10:05
  */
 
 namespace Oauth2Server\Entity;
@@ -187,15 +187,15 @@ class OAuthRefreshToken
      */
     public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     public function toArray()
     {
         return [
             'refresh_token' => $this->refresh_token,
-            'client_id'     => $this->client_id,
-            'user_id'       => $this->user_id,
+            'client_id'     => $this->client->getId(),
+            'user_id'       => !empty($this->user) ? $this->user->getId() : null,
             'expires'       => $this->expires,
             'scope'         => $this->scope,
         ];

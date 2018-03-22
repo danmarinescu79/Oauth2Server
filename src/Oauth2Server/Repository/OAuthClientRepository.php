@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 16:13:37
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 16:13:50
+ * @Last Modified time: 2018-03-16 12:04:57
  */
 
 namespace Oauth2Server\Repository;
@@ -17,6 +17,7 @@ class OAuthClientRepository extends EntityRepository implements ClientCredential
     public function getClientDetails($clientIdentifier)
     {
         $client = $this->findOneBy(['client_identifier' => $clientIdentifier]);
+        
         if ($client) {
             $client = $client->toArray();
         }
@@ -26,6 +27,7 @@ class OAuthClientRepository extends EntityRepository implements ClientCredential
     public function checkClientCredentials($clientIdentifier, $clientSecret = null)
     {
         $client = $this->findOneBy(['client_identifier' => $clientIdentifier]);
+        
         if ($client) {
             return $client->verifyClientSecret($clientSecret);
         }

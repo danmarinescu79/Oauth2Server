@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 14:01:34
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 14:15:52
+ * @Last Modified time: 2018-03-16 12:03:55
  */
 
 namespace Oauth2Server\Entity;
@@ -38,7 +38,7 @@ class OAuthClient extends EncryptableFieldEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="client_secret", type="string", length=20)
+     * @ORM\Column(name="client_secret", type="string", length=120)
      */
     private $client_secret;
 

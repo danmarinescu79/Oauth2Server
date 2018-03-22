@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 16:14:29
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 16:14:57
+ * @Last Modified time: 2018-03-21 14:55:22
  */
 
 namespace Oauth2Server\Repository;
@@ -25,13 +25,11 @@ class OAuthAccessTokenRepository extends EntityRepository implements AccessToken
         return $token;
     }
 
-    public function setAccessToken($oauthToken, $clientIdentifier, $userEmail, $expires, $scope = null)
+    public function setAccessToken($oauthToken, $clientIdentifier, $userId, $expires, $scope = null)
     {
-        $client = $this->_em->getRepository('Oauth2Server\Entity\OAuthClient')
-                            ->findOneBy(['client_identifier' => $clientIdentifier]);
-        $user = $this->_em->getRepository('Oauth2Server\Entity\OAuthUser')
-                            ->findOneBy(['email' => $userEmail]);
-        $token = OAuthAccessToken::fromArray([
+        $client = $this->_em->getRepository('Oauth2Server\Entity\OAuthClient')->findOneBy(['client_identifier' => $clientIdentifier]);
+        $user   = $this->_em->getRepository('Oauth2Server\Entity\OAuthUser')->findOneBy(['id' => $userId]);
+        $token  = OAuthAccessToken::fromArray([
             'token'   => $oauthToken,
             'client'  => $client,
             'user'    => $user,
@@ -40,5 +38,16 @@ class OAuthAccessTokenRepository extends EntityRepository implements AccessToken
         ]);
         $this->_em->persist($token);
         $this->_em->flush();
+    }
+
+    public function unsetAccessToken($accessToken)
+    {
+        $token = $this->findOneBy(['token' => $accessToken]);
+        if (!$token) {
+            return false;
+        }
+        $this->_em->remove($token);
+        $this->_em->flush();
+        return true;
     }
 }

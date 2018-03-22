@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 14:16:39
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 15:47:47
+ * @Last Modified time: 2018-03-21 16:30:25
  */
 
 namespace Oauth2Server\Entity;
@@ -79,6 +79,28 @@ class OAuthUser extends EncryptableFieldEntity
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

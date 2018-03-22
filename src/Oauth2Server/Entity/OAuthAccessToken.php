@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 16:00:08
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 16:22:21
+ * @Last Modified time: 2018-03-21 16:42:47
  */
 
 namespace Oauth2Server\Entity;
@@ -191,17 +191,20 @@ class OAuthAccessToken
      */
     public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     public function toArray()
     {
         return [
-            'token'     => $this->token,
-            'client_id' => $this->client_id,
-            'user_id'   => $this->user_id,
-            'expires'   => $this->expires,
-            'scope'     => $this->scope,
+            'token'             => $this->token,
+            'client_id'         => $this->client->getId(),
+            'client_identifier' => $this->client->getClientIdentifier(),
+            'user_id'           => !empty($this->user) ? $this->user->getId() : null,
+            'name'              => !empty($this->user) ? $this->user->getName() : null,
+            'email'             => !empty($this->user) ? $this->user->getEmail() : null,
+            'expires'           => $this->expires,
+            'scope'             => $this->scope,
         ];
     }
 }

@@ -4,7 +4,7 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 16:24:19
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-14 16:24:37
+ * @Last Modified time: 2018-03-21 14:54:17
  */
 
 namespace Oauth2Server\Repository;
@@ -25,12 +25,12 @@ class OAuthRefreshTokenRepository extends EntityRepository implements RefreshTok
         return $refreshToken;
     }
 
-    public function setRefreshToken($refreshToken, $clientIdentifier, $userEmail, $expires, $scope = null)
+    public function setRefreshToken($refreshToken, $clientIdentifier, $userId, $expires, $scope = null)
     {
         $client = $this->_em->getRepository('Oauth2Server\Entity\OAuthClient')
                             ->findOneBy(['client_identifier' => $clientIdentifier]);
         $user = $this->_em->getRepository('Oauth2Server\Entity\OAuthUser')
-                            ->findOneBy(['email' => $userEmail]);
+                            ->findOneBy(['id' => $userId]);
         $refreshToken = OAuthRefreshToken::fromArray([
            'refresh_token' => $refreshToken,
            'client'        => $client,
@@ -44,8 +44,12 @@ class OAuthRefreshTokenRepository extends EntityRepository implements RefreshTok
 
     public function unsetRefreshToken($refreshToken)
     {
-        $refreshToken = $this->findOneBy(['refresh_token' => $refreshToken]);
-        $this->_em->remove($refreshToken);
+        $token = $this->findOneBy(['refresh_token' => $refreshToken]);
+        if (!$token) {
+            return false;
+        }
+        $this->_em->remove($token);
         $this->_em->flush();
+        return true;
     }
 }
