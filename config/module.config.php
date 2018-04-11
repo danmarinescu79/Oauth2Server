@@ -4,12 +4,11 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-14 13:58:41
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-22 12:23:23
+ * @Last Modified time: 2018-04-03 13:48:05
  */
 
 namespace Oauth2Server;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Zend\Router\Http\Segment;
 
 return [
@@ -57,19 +56,6 @@ return [
     'view_manager' => [
         'strategies' => [
             'ViewJsonStrategy',
-        ],
-    ],
-    'doctrine' => [
-        'driver' => [
-            __NAMESPACE__ . '_driver' => [
-                'class' => AnnotationDriver::class,
-                'paths' => [__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity'],
-            ],
-            'orm_default' => [
-                'drivers' => [
-                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver',
-                ],
-            ],
         ],
     ],
 ];

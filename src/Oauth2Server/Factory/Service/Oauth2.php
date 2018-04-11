@@ -4,20 +4,20 @@
  * @Author: Dan Marinescu
  * @Date:   2018-03-20 18:13:49
  * @Last Modified by:   Dan Marinescu
- * @Last Modified time: 2018-03-20 23:28:09
+ * @Last Modified time: 2018-04-03 13:44:05
  */
 
 namespace Oauth2Server\Factory\Service;
 
+use ApiBase\Entity\OAuthAccessToken;
+use ApiBase\Entity\OAuthClient;
+use ApiBase\Entity\OAuthRefreshToken;
+use ApiBase\Entity\OAuthUser;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use OAuth2\GrantType\ClientCredentials;
 use OAuth2\GrantType\RefreshToken;
 use OAuth2\GrantType\UserCredentials;
-use Oauth2Server\Entity\OAuthAccessToken;
-use Oauth2Server\Entity\OAuthClient;
-use Oauth2Server\Entity\OAuthRefreshToken;
-use Oauth2Server\Entity\OAuthUser;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 class Oauth2 implements FactoryInterface
@@ -38,7 +38,8 @@ class Oauth2 implements FactoryInterface
             'always_issue_new_refresh_token' => true,
             'allow_implicit'                 => true,
             'auth_code_lifetime'             => 30,
-            'refresh_token_lifetime'         => 2419200,
+            // 'access_lifetime'                => 30,
+            'refresh_token_lifetime' => 2419200,
         ]);
 
         $server->addGrantType(new ClientCredentials($clientStorage));
