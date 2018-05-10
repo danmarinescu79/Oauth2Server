@@ -31,6 +31,8 @@
         "zendframework/zend-console": "^2.7",
         "zendframework/zend-mvc-console": "^1.1",
         "bshaffer/oauth2-server-php": "^1.10",
+        "danmarinescu79/api-base": "^0.0.1@dev",
+        "danmarinescu79/api-user": "^0.0.1@dev",
         "doctrine/doctrine-orm-module": "^2.1"
     },
     "require-dev": {
